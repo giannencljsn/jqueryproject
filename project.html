@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JQUERY101 Project</title>
+
+    <style>
+        .container {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+        .image-container {
+            width: 50%; 
+        }
+        .image-container > img {
+            width: 100%;
+            height: auto;
+            border: 5px solid black;
+        }
+        .result-container {
+            width: 50%;
+        }
+        .result-container > h5 {
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <button id="get-data">Get Star Wars Data</button>
+    <div class="container">
+        <div class="image-container" id="image"></div>
+        <div class="result-container" id="result"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#get-data').click(function(){
+                let randomId = Math.floor(Math.random() * 88) + 1; 
+                $.get('https://akabab.github.io/starwars-api/api/id/' + randomId + '.json', function(data){
+                    $('#result').empty();
+                    let keys = Object.keys(data);
+                    for (let i = 0; i < keys.length; i++) {
+                        let resultTitle = '<h5>' + data[keys[i]] + '</h5>';
+                        $('#result').append(resultTitle);
+                    }
+                    let resultImage = '<img src="' + data.image + '">';
+                    $('#image').html(resultImage);
+                })
+            })
+        })
+    </script>
+</body>
+</html>
